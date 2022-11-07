@@ -1,5 +1,7 @@
 # README
 
+"This is Finance Tracker application from the Complete Ruby On Rials Developer Course"
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
