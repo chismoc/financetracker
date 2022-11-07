@@ -5,7 +5,21 @@
 # are not: uncommented lines are intended to protect your configuration from
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
-#
+
+class TurboFailureApp < Devise::FailureApp
+  def respond
+    if request_format == :turbo_stream
+      :redirect
+    else
+      super
+    end
+  end
+
+  def skip_format?
+    %w(html turbo_stream */*).include? request_format.to_s
+  end
+end
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -15,7 +29,11 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '014e39d12930b24c5870ae5da969fa1f47d7d765cd25d38d093a1b4206264e7b6b7811f857475084965a6a526cae78b9a5f4d6bc40bbfe61e99870ec5d74210e'
-
+  config.parent_controller = 'TurboDeviseController'
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
+  config.warden do |manager|
+    manager.failure_app = TurboFailureApp
+  end
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
@@ -304,7 +322,6 @@ Devise.setup do |config|
   # end
 
   # ==> Configuration for :registerable
-
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
