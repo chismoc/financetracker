@@ -13,3 +13,9 @@ padding-right: 0 !important;
 .results-block{
     display: inline-block;
 }
+.logout-btn{
+margin-right: 5px;
+}
+.active{
+    color: aquamarine;
+}
