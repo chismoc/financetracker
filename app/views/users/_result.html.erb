@@ -1,28 +1,70 @@
-<div class="results-block">
-  <%= render 'layouts/messages' %>
-</div>
+<!doctype html>
+<html lang="en">
+    <head>
+      <title>Finance Tracker App</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+                  
+    </head>
+    <body>
+        <%= render 'layouts/navigation' %>
+        <div class="container">
+            <div class="results-block">
+                <%= render 'layouts/messages' %>
+            </div>
+              <h1>Product search Result</h1>
+                <% if @stock %>
+                <div class="card card-header results-block">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quote Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><%= @stock.ticker %></td>
+                            <td><%= @stock.name  %></td>
+                            <td><%= @stock.last_price %></td>
 
-<% if @stock %>
-<div class="card card-header results-block">
-<strong>Symbol: </strong><%= @stock.ticker %>
-<strong>Name: </strong><%= @stock.name %>
-<strong>Quote Price: </strong><%= @stock.last_price %>
-<% if current_user.can_track_stock?(@stock.ticker) %>
 
-<%= button_to 'Add to portfolio', user_stocks_path(user: current_user, ticker: @stock.ticker),
-       class: "btn btn-sm btn-success", method: :post %>
 
-<% else %>  
-<span class="badge badge-secondary">
-You are already tracking
+                            <% if @stock %>
+                <div class="card card-header results-block">
+               
+                <% if current_user.can_track_stock?(@stock.ticker) %>
 
-<% if !current_user.under_stock_limit? %>
-7 stocks
-<% end %>
-<% if current_user.stock_already_tracked?(@stock.ticker) %>
-this stock
-<% end %>
-</span>
-<% end %>
-</div>
-<% end %>
+               <td> <%= button_to 'Add to portfolio', user_stocks_path(user: current_user, ticker: @stock.ticker),
+                      class: "btn btn-sm btn-success result-color", method: :post %></td>
+
+                <% else %>  
+                <span class="badge badge-secondary result-color ">
+                You are already tracking
+
+                <% if !current_user.under_stock_limit? %>
+                7 stocks
+                <% end %>
+                <% if current_user.stock_already_tracked?(@stock.ticker) %>
+                this stock
+                <% end %>
+                </span>
+                <% end %>
+                </div>
+                <% end %>
+                           
+                <% end %>
+                        </tbody>
+                    </table>
+                </div>
+
+               
+</html>

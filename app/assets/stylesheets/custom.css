@@ -12,6 +12,10 @@ padding-right: 0 !important;
 }
 .results-block{
     display: inline-block;
+    color:blue
+}
+.result-color{
+    color:blue
 }
 .logout-btn{
 margin-right: 5px;
