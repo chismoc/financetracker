@@ -41,7 +41,7 @@
                     class: "btn btn-sm btn-success" %></td>
                       <% if current_user.not_friends_with?(friend.id) %>  
                     
-                   <td> <%= button_to 'Follow friend', '#',class: "btn btn-sm btn-success", method: :post %></td>
+                   <td> <%= button_to 'Follow friend', friendships_path(friend: friend),class: "btn btn-sm btn-success", method: :post %></td>
                     <% else %>
                    <td> <span class="bagde badge-secondary result-color">You are friends</span></td>
                     <% end %>
