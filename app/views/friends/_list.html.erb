@@ -13,7 +13,7 @@
                 <tr>
                     <th scope="row"><%=friend.full_name %></th>
                     <td><%= friend.email %></td>
-                    <td> <%= button_to "Stop following",'#', method: :delete, onclick: "return confirm('Are you sure you want to remove item?')", 
+                    <td> <%= button_to "Stop following",friendship_path(friend), method: :delete, onclick: "return confirm('Are you sure you want to stop following ?')", 
                         class:"btn btn-outline-danger btn-sm logout-btn" %></td></td>
                 </tr>
             <% end %>

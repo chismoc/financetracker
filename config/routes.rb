@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'my_friends', to: 'users#my_friends'
   get 'search_friend', to: 'users#search'
 
+  resources :friendships, only: [:create, :destroy]
+
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
